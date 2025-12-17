@@ -4,11 +4,7 @@ export default function Layout({ children }) {
   const { mode } = useTheme();
 
   return (
-    <div
-      className={`container py-4 ${
-        mode === "dark" ? "text-light" : "text-dark"
-      }`}
-    >
+    <div className={`container py-4 ${mode === "dark" ? "text-light" : ""}`}>
       {children}
     </div>
   );

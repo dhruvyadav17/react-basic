@@ -10,13 +10,19 @@ export default function Navbar({ title }) {
       }`}
     >
       <div className="container-fluid">
-        <span className="navbar-brand">{title}</span>
+        <span className="navbar-brand fw-bold">{title}</span>
+
+        {/* Dummy links – no routing */}
+        <ul className="navbar-nav me-auto">
+          <li className="nav-item nav-link">Home</li>
+          <li className="nav-item nav-link">About</li>
+        </ul>
 
         <button
           className={`btn ${mode === "dark" ? "btn-light" : "btn-dark"}`}
           onClick={toggleMode}
         >
-          {mode === "dark" ? "🌙 Dark" : "☀️ Light"}
+          {mode === "dark" ? "☀️ Light" : "🌙 Dark"}
         </button>
       </div>
     </nav>

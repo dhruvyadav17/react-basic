@@ -4,9 +4,11 @@ import Button from "./common/Button";
 import {
   toUpper,
   toLower,
+  capitalizeWords,
+  sentenceCase,
+  reverseText,
   removeExtraSpaces,
   removeSpecial,
-  reverseText,
   speakText,
 } from "../utils/textUtils";
 
@@ -16,12 +18,16 @@ export default function TextForm({ heading }) {
 
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
 
+  const downloadText = () => {
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "textutils.txt";
+    link.click();
+  };
+
   return (
-    <div
-      className={`card mb-4 shadow-sm ${
-        mode === "dark" ? "bg-dark text-light" : ""
-      }`}
-    >
+    <div className={`card mb-4 ${mode === "dark" ? "bg-dark text-light" : ""}`}>
       <div className="card-body">
         <h2>{heading}</h2>
 
@@ -34,6 +40,12 @@ export default function TextForm({ heading }) {
 
         <Button onClick={() => setText(toUpper(text))}>Uppercase</Button>
         <Button onClick={() => setText(toLower(text))}>Lowercase</Button>
+        <Button onClick={() => setText(capitalizeWords(text))}>
+          Capitalize Words
+        </Button>
+        <Button onClick={() => setText(sentenceCase(text))}>
+          Sentence Case
+        </Button>
         <Button onClick={() => setText(reverseText(text))}>Reverse</Button>
         <Button onClick={() => setText(removeExtraSpaces(text))}>
           Remove Spaces
@@ -44,6 +56,7 @@ export default function TextForm({ heading }) {
         <Button onClick={() => navigator.clipboard.writeText(text)}>
           Copy
         </Button>
+        <Button onClick={downloadText}>Download</Button>
         <Button onClick={() => speakText(text)}>Speak</Button>
         <Button variant="danger" onClick={() => setText("")}>
           Clear
@@ -52,9 +65,7 @@ export default function TextForm({ heading }) {
         <hr />
 
         <h5>Text Summary</h5>
-        <p>
-          {words} words | {text.length} characters
-        </p>
+        <p>{words} words | {text.length} characters</p>
         <p>{(words * 0.008).toFixed(2)} minutes read</p>
 
         <h5>Preview</h5>
