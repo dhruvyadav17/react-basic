@@ -1,3 +1,4 @@
+
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -16,6 +17,7 @@ export default function About() {
         This app helps you transform, clean, and analyze text with reusable,
         modular React components.
       </p>
+
     </div>
   );
 }
