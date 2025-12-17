@@ -1,9 +1,17 @@
-body.light-mode {
-  background-color: #ffffff;
-  color: #000000;
+body.theme-light {
+  background-color: #f8f9fa;
+  color: #000;
 }
 
-body.dark-mode {
+body.theme-dark {
   background-color: #121212;
-  color: #ffffff;
+  color: #fff;
+}
+
+textarea {
+  border-radius: 8px;
+}
+
+.card {
+  border-radius: 12px;
 }

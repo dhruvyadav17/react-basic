@@ -1,23 +1,21 @@
-
-import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function About() {
-  const { mode } = useContext(ThemeContext);
+  const { mode } = useTheme();
 
   return (
     <div
-      id="about"
-      className={`p-3 rounded ${
-        mode === "dark" ? "bg-secondary text-white" : "bg-white text-dark"
+      className={`card shadow-sm ${
+        mode === "dark" ? "bg-secondary text-light" : ""
       }`}
     >
-      <h2>About TextUtils</h2>
-      <p>
-        This app helps you transform, clean, and analyze text with reusable,
-        modular React components.
-      </p>
-
+      <div className="card-body">
+        <h3>About TextUtils</h3>
+        <p>
+          This app helps you transform, clean, and analyze text using
+          reusable and modular React components.
+        </p>
+      </div>
     </div>
   );
 }

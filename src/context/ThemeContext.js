@@ -1,22 +1,24 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
 
-export function ThemeProvider({ children }) {
+export const ThemeProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
 
-  const toggleMode = () => {
-    setMode(prev => (prev === "light" ? "dark" : "light"));
-  };
-
   useEffect(() => {
-    document.body.classList.remove("light-mode", "dark-mode");
-    document.body.classList.add(mode === "dark" ? "dark-mode" : "light-mode");
+    document.body.className =
+      mode === "dark" ? "theme-dark" : "theme-light";
   }, [mode]);
+
+  const toggleMode = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   return (
     <ThemeContext.Provider value={{ mode, toggleMode }}>
       {children}
     </ThemeContext.Provider>
   );
-}
+};
+
+export const useTheme = () => useContext(ThemeContext);
