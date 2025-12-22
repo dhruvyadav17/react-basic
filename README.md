@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# TextUtils - React Modular Text Utility App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **React** application for transforming, analyzing, and managing text. It is **modular, reusable, and fully responsive**, with **dark/light mode** and **export options**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Text Transformations**
+  - Uppercase / Lowercase
+  - Capitalize Words
+  - Sentence Case
+  - Reverse Text
+  - Remove Extra Spaces
+  - Remove Special Characters
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Text Actions**
+  - Copy to clipboard
+  - Clear text
+  - Speak text
+  - Download as `.txt`, `.pdf`, `.docx`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Advanced Features**
+  - Undo / Redo actions
+  - History panel (last 10 changes)
+  - Keyboard shortcuts
+  - Reusable modular components (Button, Card, TextArea, EmptyState)
+  - Dark/Light mode toggle
 
-### `npm test`
+- **Pages**
+  - Home
+  - Text Form
+  - About
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+src/
+├─ components/
+│ ├─ common/ # Reusable components
+│ ├─ navbar/ # Navbar
+│ ├─ text/ # TextForm and related components
+│ ├─ Home.jsx
+│ └─ About.jsx
+├─ redux/ # Redux store and slices
+├─ utils/ # Text utility functions
+├─ hooks/ # Custom hooks
+└─ App.jsx # App entry point
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Navigate to Text Form page to enter text.
 
-### `npm run eject`
+Use buttons to transform text.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+View live summary: word count, character count, estimated reading time.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Access history panel to restore previous changes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Toggle dark/light mode from the navbar.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Export text as .txt, .pdf, or .docx.
 
-## Learn More
+Home and About pages show heading and content cards styled consistently.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Dependencies
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+react / react-dom
 
-### Code Splitting
+react-router-dom
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+react-redux
 
-### Analyzing the Bundle Size
+@reduxjs/toolkit
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+bootstrap
 
-### Making a Progressive Web App
+jspdf - for PDF export
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+docx - for DOCX export
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
