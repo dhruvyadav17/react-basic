@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import Card from "../common/Card";
 import TextArea from "../common/TextArea";
 import TextActions from "./TextActions";
+import TextStats from "./TextStats";
+import EmptyState from "../common/EmptyState";
 import {
   toUpper,
   toLower,
@@ -43,12 +45,9 @@ export default function TextForm({ heading }) {
   ];
 
   return (
-    <Card
-      mode={mode}
-      header={heading}
-    >
+    <Card mode={mode} header={heading} headerIcon="✍️">
       <TextArea
-        label="Enter your text below"
+        label="Enter your text"
         rows={6}
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -63,16 +62,14 @@ export default function TextForm({ heading }) {
 
       <hr />
 
-      <h6>Text Summary</h6>
-      <p>
-        {words} words | {text.length} characters
-      </p>
-      <p>{(words * 0.008).toFixed(2)} minutes read</p>
+      <TextStats words={words} characters={text.length} />
 
       <h6>Preview</h6>
-      <p className="text-muted">
-        {text || "Nothing to preview"}
-      </p>
+      {text ? (
+        <p>{text}</p>
+      ) : (
+        <EmptyState message="Nothing to preview" icon="👀" />
+      )}
     </Card>
   );
 }

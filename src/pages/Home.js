@@ -8,14 +8,14 @@ export default function Home({ heading }) {
     <Card
       mode={mode}
       header={heading}
+      headerIcon="🏠"
     >
       <p className="fs-5">
-        Welcome to <strong>TextUtils</strong> 🚀
+        Welcome to <strong>TextUtils</strong>
       </p>
       <p>
-        This application helps you manipulate and analyze text efficiently.
-        You can convert text to uppercase, lowercase, remove extra spaces,
-        and much more — all in one place.
+        A simple and powerful text utility app where you can transform,
+        clean, and analyze text quickly and easily.
       </p>
     </Card>
   );

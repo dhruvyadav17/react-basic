@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMode } from "../../redux/slices/themeSlice";
 
@@ -6,18 +6,29 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const { mode, title } = useSelector((state) => state.theme);
 
+  // ✅ MENU CONFIG (REUSABLE)
+  const menuItems = [
+    { path: "/", label: "Home", icon: "🏠" },
+    { path: "/textform", label: "Text Form", icon: "✍️" },
+    { path: "/about", label: "About", icon: "ℹ️" },
+  ];
+
+  const linkClass = ({ isActive }) =>
+    `nav-link d-flex align-items-center gap-1 ${
+      isActive ? "fw-bold text-primary" : ""
+    }`;
+
   return (
     <nav
-      className={`navbar navbar-expand-lg shadow-sm ${
-        mode === "dark"
-          ? "navbar-dark bg-dark"
-          : "navbar-light bg-light"
+      className={`navbar navbar-expand-lg ${
+        mode === "dark" ? "navbar-dark bg-dark" : "navbar-light bg-light"
       }`}
     >
-      <div className="container">
-        <Link to="/" className="navbar-brand fw-bold fs-4">
+      <div className="container-fluid">
+        {/* Logo / Title */}
+        <NavLink to="/" className="navbar-brand fw-bold">
           {title}
-        </Link>
+        </NavLink>
 
         <button
           className="navbar-toggler"
@@ -29,31 +40,24 @@ export default function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
+          {/* MENU */}
           <ul className="navbar-nav me-auto gap-2">
-            <li className="nav-item">
-              <Link to="/" className="nav-link fw-medium">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/textform" className="nav-link fw-medium">
-                Text Form
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-link fw-medium">
-                About
-              </Link>
-            </li>
+            {menuItems.map((item) => (
+              <li className="nav-item" key={item.path}>
+                <NavLink to={item.path} className={linkClass}>
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
+          {/* THEME TOGGLE */}
           <button
-            className={`btn ${
-              mode === "dark" ? "btn-outline-light" : "btn-outline-dark"
-            }`}
+            className={`btn ${mode === "dark" ? "btn-light" : "btn-dark"}`}
             onClick={() => dispatch(toggleMode())}
           >
-            {mode === "dark" ? "☀ Light" : "🌙 Dark"}
+            {mode === "dark" ? "☀️ Light" : "🌙 Dark"}
           </button>
         </div>
       </div>

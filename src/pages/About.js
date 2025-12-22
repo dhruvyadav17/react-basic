@@ -8,14 +8,14 @@ export default function About({ heading }) {
     <Card
       mode={mode}
       header={heading}
+      headerIcon="ℹ️"
     >
       <p className="fs-5">
         About <strong>TextUtils</strong>
       </p>
       <p>
-        TextUtils is a simple yet powerful text utility app built using
-        reusable and modular React components. It focuses on clean UI,
-        reusability, and scalability.
+        TextUtils is built using modular and reusable React components.
+        The app focuses on clean UI, scalability, and maintainable code.
       </p>
     </Card>
   );
