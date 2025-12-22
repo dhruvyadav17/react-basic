@@ -1,11 +1,15 @@
-import { useTheme } from "../../context/ThemeContext";
+import { useSelector } from "react-redux";
 
 export default function Layout({ children }) {
-  const { mode } = useTheme();
+  const mode = useSelector((state) => state.theme.mode);
 
   return (
-    <div className={`container py-4 ${mode === "dark" ? "text-light" : ""}`}>
+    <main
+      className={`container py-5 ${
+        mode === "dark" ? "text-light" : ""
+      }`}
+    >
       {children}
-    </div>
+    </main>
   );
 }
