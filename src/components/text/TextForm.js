@@ -5,7 +5,10 @@ import TextArea from "../common/TextArea";
 import TextActions from "./TextActions";
 import TextStats from "./TextStats";
 import EmptyState from "../common/EmptyState";
-import TextHistory from "./TextHistory";
+import { t } from "../../i18n";
+import usePageTitle from "../../hooks/usePageTitle";
+
+import { useTextStats } from "../../hooks/useTextStats";
 import {
   toUpper,
   toLower,
@@ -21,11 +24,15 @@ import {
 
 export default function TextForm({ heading }) {
   const mode = useSelector((state) => state.theme.mode);
+  const lang = useSelector((state) => state.language.current);
+
   const [text, setText] = useState("");
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
 
-  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  usePageTitle(heading);
+
+  const { words, characters, readTime } = useTextStats(text);
 
   useEffect(() => {
     if (text !== history[history.length - 1]) {
@@ -50,19 +57,6 @@ export default function TextForm({ heading }) {
     }
   }, [redoStack]);
 
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.target.tagName === "TEXTAREA") return;
-      if (e.key === "u" || e.key === "U") setText(toUpper(text));
-      if (e.key === "l" || e.key === "L") setText(toLower(text));
-      if (e.key === "c" || e.key === "C") setText("");
-      if (e.key === "s" || e.key === "S") speakText(text);
-      if (e.key === "d" || e.key === "D") exportPDF(text);
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [text]);
-
   const downloadText = () => {
     const blob = new Blob([text], { type: "text/plain" });
     const link = document.createElement("a");
@@ -72,29 +66,48 @@ export default function TextForm({ heading }) {
   };
 
   const actions = [
-    { label: "Uppercase", action: (t, s) => s(toUpper(t)) },
-    { label: "Lowercase", action: (t, s) => s(toLower(t)) },
-    { label: "Capitalize Words", action: (t, s) => s(capitalizeWords(t)) },
-    { label: "Sentence Case", action: (t, s) => s(sentenceCase(t)) },
-    { label: "Reverse", action: (t, s) => s(reverseText(t)) },
-    { label: "Remove Spaces", action: (t, s) => s(removeExtraSpaces(t)) },
-    { label: "Remove Special", action: (t, s) => s(removeSpecial(t)) },
-    { label: "Copy", action: (t) => navigator.clipboard.writeText(t) },
-    { label: "Download", action: downloadText },
-    { label: "Speak", action: (t) => speakText(t) },
-    { label: "Export PDF", action: (t) => exportPDF(t) },
-    { label: "Export DOCX", action: (t) => exportDocx(t) },
-    { label: "Clear", action: (_, s) => s(""), variant: "danger" },
+    { label: t(lang, "buttons.uppercase"), action: (t, s) => s(toUpper(t)) },
+    { label: t(lang, "buttons.lowercase"), action: (t, s) => s(toLower(t)) },
+    {
+      label: t(lang, "buttons.capitalize"),
+      action: (t, s) => s(capitalizeWords(t)),
+    },
+    {
+      label: t(lang, "buttons.sentence"),
+      action: (t, s) => s(sentenceCase(t)),
+    },
+    { label: t(lang, "buttons.reverse"), action: (t, s) => s(reverseText(t)) },
+    {
+      label: t(lang, "buttons.removeSpaces"),
+      action: (t, s) => s(removeExtraSpaces(t)),
+    },
+    {
+      label: t(lang, "buttons.removeSpecial"),
+      action: (t, s) => s(removeSpecial(t)),
+    },
+    {
+      label: t(lang, "buttons.copy"),
+      action: (t) => navigator.clipboard.writeText(t),
+    },
+    { label: t(lang, "buttons.download"), action: downloadText },
+    { label: t(lang, "buttons.speak"), action: (t) => speakText(t) },
+    { label: t(lang, "buttons.exportPDF"), action: (t) => exportPDF(t) },
+    { label: t(lang, "buttons.exportDOCX"), action: (t) => exportDocx(t) },
+    {
+      label: t(lang, "buttons.clear"),
+      action: (_, s) => s(""),
+      variant: "danger",
+    },
   ];
 
   return (
     <Card mode={mode} header={heading} headerIcon="✍️">
       <TextArea
-        label="Enter your text"
+        label={t(lang, "textForm.heading")}
         rows={6}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Start typing here..."
+        placeholder={t(lang, "textForm.placeholder")}
       />
 
       <TextActions
@@ -105,14 +118,22 @@ export default function TextForm({ heading }) {
         redo={redo}
       />
 
-      <TextHistory history={history.slice(0, -1)} restore={(idx) => setText(history[idx])} />
-
       <hr />
 
-      <TextStats words={words} characters={text.length} />
+      <TextStats
+        words={words}
+        characters={characters}
+        readTime={readTime}
+        labelReadTime={t(lang, "textForm.readTime")}
+        labelSummary={t(lang, "textForm.summary")}
+      />
 
-      <h6>Preview</h6>
-      {text ? <p>{text}</p> : <EmptyState message="Nothing to preview" icon="👀" />}
+      <h6>{t(lang, "textForm.preview")}</h6>
+      {text ? (
+        <p>{text}</p>
+      ) : (
+        <EmptyState message={t(lang, "textForm.emptyPreview")} icon="👀" />
+      )}
     </Card>
   );
 }

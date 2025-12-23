@@ -38,9 +38,9 @@ export const exportDocx = (text = "", filename = "textutils.docx") => {
       sections: [
         {
           properties: {},
-          children: text.split("\n").map(
-            (line) => new Paragraph({ children: [new TextRun(line)] })
-          ),
+          children: text
+            .split("\n")
+            .map((line) => new Paragraph({ children: [new TextRun(line)] })),
         },
       ],
     });

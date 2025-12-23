@@ -10,7 +10,8 @@ export default function TextHistory({ history, restore }) {
         {history.map((item, idx) => (
           <li key={idx} className="mb-1 d-flex justify-content-between">
             <span className="text-truncate" style={{ maxWidth: "70%" }}>
-              {item.slice(0, 50)}{item.length > 50 ? "..." : ""}
+              {item.slice(0, 50)}
+              {item.length > 50 ? "..." : ""}
             </span>
             <Button size="sm" variant="secondary" onClick={() => restore(idx)}>
               Restore

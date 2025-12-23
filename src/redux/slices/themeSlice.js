@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import appConfig from "../../config/appConfig";
 
 const themeSlice = createSlice({
   name: "theme",
   initialState: {
-    mode: "light",
-    title: "TextUtils", // 👉 Navbar logo/title
+    mode: appConfig.defaultTheme,
+    title: appConfig.appName, // 👉 Navbar logo/title
   },
   reducers: {
     toggleMode(state) {

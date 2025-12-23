@@ -1,22 +1,21 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMode } from "../../redux/slices/themeSlice";
+import { toggleLanguage } from "../../redux/slices/languageSlice";
+import { t } from "../../i18n";
+import LanguageSwitcher from "../common/LanguageSwitcher";
+
+
+const menu = [
+  { path: "/", key: "menu.home", icon: "🏠" },
+  { path: "/textform", key: "menu.textForm", icon: "✍️" },
+  { path: "/about", key: "menu.about", icon: "ℹ️" },
+];
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const { mode, title } = useSelector((state) => state.theme);
-
-  // ✅ MENU CONFIG (REUSABLE)
-  const menuItems = [
-    { path: "/", label: "Home", icon: "🏠" },
-    { path: "/textform", label: "Text Form", icon: "✍️" },
-    { path: "/about", label: "About", icon: "ℹ️" },
-  ];
-
-  const linkClass = ({ isActive }) =>
-    `nav-link d-flex align-items-center gap-1 ${
-      isActive ? "fw-bold text-primary" : ""
-    }`;
+  const lang = useSelector((state) => state.language.current);
 
   return (
     <nav
@@ -25,41 +24,34 @@ export default function Navbar() {
       }`}
     >
       <div className="container-fluid">
-        {/* Logo / Title */}
         <NavLink to="/" className="navbar-brand fw-bold">
           {title}
         </NavLink>
 
+        <ul className="navbar-nav me-auto">
+          {menu.map((item) => (
+            <li key={item.path} className="nav-item">
+              <NavLink className="nav-link" to={item.path}>
+                {item.icon} {t(lang, item.key)}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+
         <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          className="btn btn-outline-secondary me-2"
+          onClick={() => dispatch(toggleMode())}
         >
-          <span className="navbar-toggler-icon" />
+          {mode === "dark" ? "☀️" : "🌙"}
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          {/* MENU */}
-          <ul className="navbar-nav me-auto gap-2">
-            {menuItems.map((item) => (
-              <li className="nav-item" key={item.path}>
-                <NavLink to={item.path} className={linkClass}>
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-
-          {/* THEME TOGGLE */}
-          <button
-            className={`btn ${mode === "dark" ? "btn-light" : "btn-dark"}`}
-            onClick={() => dispatch(toggleMode())}
-          >
-            {mode === "dark" ? "☀️ Light" : "🌙 Dark"}
-          </button>
-        </div>
+        {/* <button
+          className="btn btn-outline-secondary"
+          onClick={() => dispatch(toggleLanguage())}
+        >
+          {lang === "en" ? "🇮🇳" : "🇬🇧"}
+        </button> */}
+        <LanguageSwitcher />
       </div>
     </nav>
   );

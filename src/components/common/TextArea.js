@@ -9,14 +9,9 @@ export default function TextArea({
 }) {
   return (
     <div className="mb-3">
-      {label && (
-        <label className="form-label fw-semibold">
-          {label}
-        </label>
-      )}
-
+      {label && <label className="form-label">{label}</label>}
       <textarea
-        className={`form-control form-control-lg ${className}`}
+        className={`form-control ${className}`}
         rows={rows}
         value={value}
         onChange={onChange}

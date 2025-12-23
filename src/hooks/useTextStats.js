@@ -1,3 +1,4 @@
+// src/hooks/useTextStats.js
 export const useTextStats = (text = "") => {
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
   const characters = text.length;

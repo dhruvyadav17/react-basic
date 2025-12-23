@@ -1,22 +1,19 @@
 import { useSelector } from "react-redux";
 import Card from "../components/common/Card";
+import { t } from "../i18n";
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function About({ heading }) {
   const mode = useSelector((state) => state.theme.mode);
+  const lang = useSelector((state) => state.language.current);
+
+  // Page title dynamically set
+  usePageTitle(heading);
 
   return (
-    <Card
-      mode={mode}
-      header={heading}
-      headerIcon="ℹ️"
-    >
-      <p className="fs-5">
-        About <strong>TextUtils</strong>
-      </p>
-      <p>
-        TextUtils is built using modular and reusable React components.
-        The app focuses on clean UI, scalability, and maintainable code.
-      </p>
+    <Card mode={mode} header={heading} headerIcon="ℹ️">
+      <p className="fs-5">{t(lang, "about.heading")}</p>
+      <p>{t(lang, "about.description")}</p>
     </Card>
   );
 }
